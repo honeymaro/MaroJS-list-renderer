@@ -1,7 +1,9 @@
 # MaroJS-list-renderer
 
 This is Simple list renderer. 
+
 There are a lot of other great libraries... but this is for my study.
+
 Please give me any advice, and All contributions are welcome!
 
 ## How to use
