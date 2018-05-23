@@ -33,11 +33,12 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 		var datas = [];
 		var i = 0;
 		for (i = 0; i < keys.length; i++) {
-			datas.push(JSON.stringify(data[keys[i]]).slice(1, -1));
+			datas.push(JSON.stringify(data[keys[i]]));
 		}
-		var datasString = "'" + datas.join("', '") + "'";
+		// var datasString = "'" + datas.join("', '") + "'";
+		var datasString = datas.join(", ");
 		var evaluator = new Function(
-			"var evaluator = new Function('" + keysString + "', 'try{\\nreturn " + expression + ";');\\n}\\ncatch(e){\\nreturn undefined;\\n}\\n"
+			"var evaluator = new Function('" + keysString + "', 'try{ return " + expression + "; } catch(e){ return undefined;}');"
 			+ "return evaluator(" + datasString + ");"
 		);
 		return evaluator();
