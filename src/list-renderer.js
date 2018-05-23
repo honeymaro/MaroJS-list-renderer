@@ -22,9 +22,10 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 		return arrayExpression;
 
 	}
+	
 	var expressionToValue = function (expression, data) {
 
-		expression = replaceAll(expression,"'","\\'");
+		expression = JSON.stringify(expression).slice(1, -1); //replaceAll(expression,"'","\\'");
 
 		var keys = Object.keys(data);
 		var keysString = keys.join(",");
@@ -32,7 +33,7 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 		var datas = [];
 		var i = 0;
 		for (i = 0; i < keys.length; i++) {
-			datas.push(data[keys[i]]);
+			datas.push(JSON.stringify(data[keys[i]]).slice(1, -1));
 		}
 		var datasString = "'" + datas.join("', '") + "'";
 		var evaluator = new Function(
