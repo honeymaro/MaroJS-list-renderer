@@ -26,7 +26,6 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 	var expressionToValue = function (expression, data) {
 
 		expression = JSON.stringify(expression).slice(1, -1); //replaceAll(expression,"'","\\'");
-
 		var keys = Object.keys(data);
 		var keysString = keys.join(",");
 
