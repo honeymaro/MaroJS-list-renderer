@@ -8,51 +8,16 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 	var replaceAll = function (targetValue, searchValue, replaceValue) {
 		return targetValue.split(searchValue).join(replaceValue);
 	}
-
-	var getExpressionList = function (str) {
-		var splitedTemplate = str.split("${");
-		var i = 0;
-		var arrayExpression = [];
-
-		for (i = 1; i < splitedTemplate.length; i++) {
-			splitedTemplate[i] = splitedTemplate[i].split("}");
-			arrayExpression.push(splitedTemplate[i][0]);
-		}
-
-		return arrayExpression;
-
-	}
-	var expressionToValue = function (expression, data) {
-
-		expression = replaceAll(expression,"'","\\'");
-
-		var keys = Object.keys(data);
-		var keysString = keys.join(",");
-
-		var datas = [];
-		var i = 0;
-		for (i = 0; i < keys.length; i++) {
-			datas.push(data[keys[i]]);
-		}
-		var datasString = "'" + datas.join("', '") + "'";
-		var evaluator = new Function(
-			"var evaluator = new Function('" + keysString + "', 'return " + expression + ";');\n"
-			+ "return evaluator(" + datasString + ");"
-		);
-		return evaluator();
-	}
-
 	var renderRefresh = function () {
 		var i = 0;
 		var renderedHtml = "";
-		var expressionList = getExpressionList(_renderTemplate);
-
 		for (i = 0; i < _renderData.length; i++) {
 			var data = _renderData[i];
+			var keys = Object.keys(data);
 			var html = _renderTemplate;
 			var j = 0;
-			for (j = 0; j < expressionList.length; j++) {
-				html = replaceAll(html, "${" + expressionList[j] + "}", expressionToValue(expressionList[j], data));
+			for (j = 0; j < keys.length; j++) {
+				html = replaceAll(html, "${" + keys[j] + "}", data[keys[j]]);
 			}
 			renderedHtml += html;
 		}
@@ -81,16 +46,6 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 		getRenderData: function (index) {
 			return index === undefined ? _renderData : _renderData[index];
 		},
-		getRenderTarget: function () {
-			return _renderTarget;
-		},
-		getRenderTemplate: function () {
-			return _initTemplate;
-		},
-		setRenderTemplate: function(str){
-			_renderTemplate = removeNeedlessSpace(str);
-			renderRefresh();
-		},
 		addRenderData: function (data) {
 
 			var i = 0;
@@ -114,7 +69,7 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 			renderRefresh();
 			return _renderData;
 		},
-		refresh: function () {
+		refresh: function(){
 			renderRefresh();
 			return true;
 		}

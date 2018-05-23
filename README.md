@@ -26,6 +26,21 @@ var renderer = new Maro.listRenderer("#divExample", $("#divExample").html(), [
 </div>
 ```
 
+## Update log
+### Feb 28, 2018
+First version of list renderer.
+
+You can set the template and print the list.
+
+
+### May 23, 2018
+You can access the DOM object you set.
+
+You can use a JavaScript expression in the template.
+
+### Next step(todo)
+This library will no longer use jQuery.
+
 
 ### Set render data
 
@@ -36,7 +51,31 @@ renderer.setRenderData([{name: "1", value: "1"}, {name: "2", value: "2"}]); // A
 ### Get render data
 
 ```javascript
-renderer.getRenderData(index);
+renderer.getRenderData(index); //object
+```
+
+or 
+
+```javascript
+renderer.getRenderData(); //array
+```
+
+### Get render target
+
+```javascript
+renderer.getRenderTarget(); //dom
+```
+
+### Get render template
+
+```javascript
+renderer.getRenderTemplate(); //string
+```
+
+### Set render template
+
+```javascript
+renderer.setRenderTemplate($(".dom").html()); //string
 ```
 
 ### Add render data
