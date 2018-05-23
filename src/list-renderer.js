@@ -37,7 +37,7 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 		}
 		var datasString = "'" + datas.join("', '") + "'";
 		var evaluator = new Function(
-			"var evaluator = new Function('" + keysString + "', 'try{\nreturn " + expression + ";');\n}\ncatch(e){\nreturn undefined;\n}\n"
+			"var evaluator = new Function('" + keysString + "', 'try{\\nreturn " + expression + ";');\\n}\\ncatch(e){\\nreturn undefined;\\n}\\n"
 			+ "return evaluator(" + datasString + ");"
 		);
 		return evaluator();
