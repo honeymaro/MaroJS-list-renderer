@@ -23,6 +23,15 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 
 	}
 
+	var DOMtext = document.createTextNode("");
+	var DOMnative = document.createElement("span");
+	DOMnative.appendChild(DOMtext);
+
+	var HTMLescape = function(str) {
+		DOMtext.nodeValue = str;
+		return DOMnative.innerHTML
+	}
+
 	var expressionToValue = function (expression, data) {
 
 		expression = JSON.stringify(expression).slice(1, -1); //replaceAll(expression,"'","\\'");
@@ -40,7 +49,7 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 			"var evaluator = new Function('" + keysString + "', 'try{ return " + expression + "; } catch(e){ return undefined;}');"
 			+ "return evaluator(" + datasString + ");"
 		);
-		return evaluator();
+		return replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(HTMLescape(evaluator()), "'", "&#39;"), '"', '&quot;'), '&', '&amp;'), '<', '&lt;'), '>', '&gt;');
 	}
 
 	var renderRefresh = function () {
