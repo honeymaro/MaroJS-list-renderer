@@ -49,7 +49,8 @@ Maro.listRenderer = (function (_initTarget, _initTemplate, _initData) {
 			"var evaluator = new Function('" + keysString + "', 'try{ return " + expression + "; } catch(e){ return undefined;}');"
 			+ "return evaluator(" + datasString + ");"
 		);
-		return replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(HTMLescape(evaluator()), "'", "&#39;"), '"', '&quot;'), '&', '&amp;'), '<', '&lt;'), '>', '&gt;');
+		// return replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(HTMLescape(evaluator()), "'", "&#39;"), '"', '&quot;'), '&', '&amp;'), '<', '&lt;'), '>', '&gt;');
+		return replaceAll(replaceAll(HTMLescape(evaluator()), "'", "&#39;"), '"', '&quot;');
 	}
 
 	var renderRefresh = function () {
